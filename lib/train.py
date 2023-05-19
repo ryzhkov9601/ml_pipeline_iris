@@ -41,6 +41,17 @@ METRICS = {
     'accuracy': accuracy_score,
 }
 
+# {"command": "dvc exp run -S train.model=knn"}
+# {"command": "dvc exp run -S train.model=svm_linear"}
+# {"command": "dvc exp run -S train.model=svm_rbf"}
+# {"command": "dvc exp run -S train.model=gaussian_process"}
+# {"command": "dvc exp run -S train.model=decision_tree"}
+# {"command": "dvc exp run -S train.model=random_forest"}
+# {"command": "dvc exp run -S train.model=neural_net"}
+# {"command": "dvc exp run -S train.model=adaboost"}
+# {"command": "dvc exp run -S train.model=gaussian_nb"}
+# {"command": "dvc exp run -S train.model=qda"}
+# {"command": "dvc exp run -S train.model=logistic_regression"}
 MODELS = {
     'knn': KNeighborsClassifier(3),
     'svm_linear': SVC(kernel="linear", C=0.025),
@@ -88,7 +99,7 @@ def train():
 
     metrics = {}
     for metric_name in params_data['eval']['metrics']:
-        metrics[metric_name] = METRICS[metric_name](data[['train_y']], preds)
+        metrics[metric_name] = METRICS[metric_name](data['train_y'], preds)
 
     report = classification_report(data['train_y'], preds, output_dict=True)
 
@@ -98,7 +109,7 @@ def train():
     save_dict(metrics, os.path.join(task_dir, 'metrics.json'))
     save_dict(report, os.path.join(task_dir, 'report.json'))
 
-    sns.heatmap(pd.DataFrame(train_x).corr())
+    sns.heatmap(pd.DataFrame(data['train_x']).corr())
 
     plt.savefig('data/train/heatmap.png')
 

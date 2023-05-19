@@ -39,11 +39,11 @@ def preprocessing():
 
     iris = datasets.load_iris(as_frame=True)
 
-    feature_names = config['features'].strip('[]').split(', ')
+    feature_names = config['features']
     features = [FEATURES[feature_name] for feature_name in feature_names]
 
-    x = iris['data'][features].values
-    y = iris['target'].values
+    x = iris['data'][features].values.tolist()
+    y = iris['target'].tolist()
 
     train_x, test_x, train_y, test_y = train_test_split(x, y, test_size=config['test_size'])
 
