@@ -1,10 +1,20 @@
 stages:
+  preprocessing:
+    cmd: PYTHONPATH="." python lib/preprocessing.py --config-path params.yaml
+    params:
+      - preprocessing
+    deps:
+      - lib/preprocessing.py
+    outs:
+      - data/preprocessing
+
   train:
     cmd: PYTHONPATH="." python lib/train.py --config-path params.yaml
     params:
       - train
     deps:
       - lib/train.py
+      - data/preprocessing
     outs:
       - data/train
 
@@ -14,6 +24,7 @@ stages:
       - eval
     deps:
       - lib/eval.py
+      - data/preprocessing
       - data/train
     outs:
       - data/eval
