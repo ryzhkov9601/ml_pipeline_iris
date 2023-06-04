@@ -52,6 +52,7 @@ METRICS = {
 # {"command": "dvc exp run -S train.model=gaussian_nb"}
 # {"command": "dvc exp run -S train.model=qda"}
 # {"command": "dvc exp run -S train.model=logistic_regression"}
+# {"command": "dvc exp run -S preprocessing.features='[sepal_length, sepal_width]'"}
 MODELS = {
     'knn': KNeighborsClassifier(3),
     'svm_linear': SVC(kernel="linear", C=0.025),
